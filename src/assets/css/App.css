@@ -1,0 +1,116 @@
+.container {
+  inline-size: min(540px, 100%);
+  padding: var(--spacing-400);
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  translate: -50%;
+
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  color: var(--heading-font-color);
+}
+
+.header h1 {
+  font-size: clamp(var(--font-size-600), 6vw, var(--font-size-800));
+  letter-spacing: 10px;
+}
+
+.hero-image {
+  background-image: url(./src/assets/images/bg-mobile-light.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 200px;
+}
+
+.dark .hero-image {
+  background-image: url(./src/assets/images/bg-mobile-dark.jpg);
+}
+
+.todo__form,
+.todo__list {
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius-soft);
+}
+
+.todo__form {
+  margin-block-end: var(--spacing-400);
+  padding: var(--spacing-400);
+}
+
+.todo__item {
+  padding: var(--spacing-400);
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line-color);
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-400);
+}
+
+input[type="checkbox"],
+input[type="checkbox"]::before {
+  height: 22px;
+  width: 22px;
+  border-radius: var(--border-radius-round);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  position: relative;
+  background-color: inherit;
+  border: 1px solid var(--checkmark-border);
+}
+
+
+input[type="checkbox"]::before {
+  content: url(./src/assets/images/icon-check.svg);
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  display: grid;
+  place-content: center;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  background: var(--checked-background);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="text"] {
+  background-color: inherit;
+  border: none;
+  flex-grow: 1;
+}
+
+input[type="text"]:focus {
+  outline: none;
+}
+
+@media screen and (min-width: 375px) {
+  .hero-image {
+    height: 300px;
+  }
+
+  .hero-image {
+    background-image: url(./src/assets/images/bg-desktop-light.jpg);
+  }
+
+  .dark .hero-image {
+    background-image: url(./src/assets/images/bg-desktop-dark.jpg);
+  }
+
+  .container {
+    top: 100px;
+  }
+
+}

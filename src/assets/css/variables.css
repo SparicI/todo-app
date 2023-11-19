@@ -1,0 +1,77 @@
+html {
+    /* Colors */
+
+    /* Primary */
+    --bright-blue: hsl(220, 98%, 61%);
+    --checked-background: linear-gradient(to right bottom, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+
+    /* Neutral */
+
+    --background-color: hsl(236, 33%, 92%);
+    --font-color: hsl(235, 24%, 19%);
+    --heading-font-color: hsl(0, 0%, 98%);
+    --surface-color: hsl(0, 0%, 98%);
+    --line-color: hsl(233, 11%, 84%);
+    --checkmark-border: hsl(236, 33%, 92%);
+    --light-grayish-blue: hsl(233, 11%, 84%);
+    --light-theme-dark-grayish-blue-lighter: hsl(236, 9%, 61%);
+    --light-theme-very-dark-grayish-blue-darker: hsl(235, 19%, 35%);
+
+    /* Typography */
+    --font-size-100: 12px;
+    --font-size-200: 14px;
+    --font-size-300: 16px;
+    --font-size-400: 18px;
+    --font-size-500: 20px;
+    --font-size-600: 25px;
+    --font-size-700: 24px;
+    --font-size-800: 45px;
+
+    --font-family: 'Josefin Sans', sans-serif;
+
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+
+    --line-height-heading: 1.1;
+    --line-height-base: 1.5;
+
+    /* Spacing */
+    --spacing-200: 0.5rem;
+    --spacing-300: 0.75rem;
+    --spacing-400: 1rem;
+    --spacing-500: 1.25rem;
+    --spacing-600: 1.5rem;
+    --spacing-700: 1.75rem;
+    --spacing-800: 2rem;
+    --spacing-900: 2.5rem;
+    --spacing-1000: 3.5rem;
+
+    /* Other */
+    --border-radius-soft: 5px;
+    --border-radius-round: 50%;
+
+
+    /* --box-shadow-base: 2px 12px 20px rgba(0 0 0 / 0.3);
+    --box-shadow-orange: 2px 30px 20px var(--pale-orange); */
+
+
+    /* Layout - The designs were created to the following widths:
+
+        - Mobile: 375px
+        - Desktop: 1440px */
+
+}
+
+
+.dark {
+    /* # Dark Theme */
+    --background-color: hsl(235, 21%, 11%);
+    --font-color: hsl(234, 39%, 85%);
+    --surface-color: hsl(237, 14%, 26%);
+    --line-color: hsl(233, 14%, 35%);
+    /*(hover)*/
+    --dark-grayish-blue: hsl(234, 11%, 52%);
+    --dark-theme-very-dark-grayish-blue-lighter: hsl(233, 14%, 35%);
+    /* --dark-theme-very-dark-grayish-blue-darker: hsl(237, 14%, 26%); */
+
+}
