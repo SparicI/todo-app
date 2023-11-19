@@ -20,7 +20,7 @@
 }
 
 .hero-image {
-  background-image: url(./src/assets/images/bg-mobile-light.jpg);
+  background-image: url(/src/assets/images/bg-mobile-light.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -28,7 +28,7 @@
 }
 
 .dark .hero-image {
-  background-image: url(./src/assets/images/bg-mobile-dark.jpg);
+  background-image: url(/src/assets/images/bg-mobile-dark.jpg);
 }
 
 .todo__form,
@@ -71,7 +71,7 @@ input[type="checkbox"] {
 
 
 input[type="checkbox"]::before {
-  content: url(./src/assets/images/icon-check.svg);
+  content: url(/src/assets/images/icon-check.svg);
   position: absolute;
   top: -1px;
   left: -1px;
@@ -103,11 +103,11 @@ input[type="text"]:focus {
   }
 
   .hero-image {
-    background-image: url(./src/assets/images/bg-desktop-light.jpg);
+    background-image: url(/src/assets/images/bg-desktop-light.jpg);
   }
 
   .dark .hero-image {
-    background-image: url(./src/assets/images/bg-desktop-dark.jpg);
+    background-image: url(/src/assets/images/bg-desktop-dark.jpg);
   }
 
   .container {
