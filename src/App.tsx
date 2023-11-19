@@ -10,17 +10,30 @@ import './assets/css/utilities.css'
 
 function App() {
 
-  //type TodoItem = { title: string; done: boolean };
+  type TodoItem = { title: string; index: number; done: boolean };
 
   const [lightTheme, setLightTheme] = createSignal(true);
   const [newTitle, setNewTitle] = createSignal('')
-  const [todos, setTodos] = createSignal([{ title: "uiuio", done: false }, { title: "jkjfkef", done: true }])
+  const [todos, setTodos] = createSignal<TodoItem[]>([])
 
   const changeToDarkTheme = () => setLightTheme(false)
   const changeToLightTheme = () => setLightTheme(true)
-  const addTodo = () => console.log("test")
+  const addTodo = (e: Event) => {
+    e.preventDefault()
+    // batch helper allows to queue up multiple changes and then apply them all
+    // at the same time before notifying their observers.
+    batch(() => {
+      setTodos([...todos(), { title: newTitle(), index: Math.floor(Date.now() + Math.random() * 100), done: false }])
+      setNewTitle('')
+    })
+  }
 
-  // TODO: add theme preferences to local storage
+  const removeTodo = (index: number) => {
+    const filteredTodos = todos().filter(item => item.index !== index)
+    setTodos(filteredTodos)
+  }
+
+  // TODO: add theme preferences and tasks to local storage
 
   createEffect(() => {
     if (lightTheme() === false) {
@@ -53,7 +66,6 @@ function App() {
         <form onSubmit={addTodo} class="todo__form checkbox-wrapper" >
           <input
             type="checkbox"
-            onInput={(e) => console.log("Event from radio input", e)}
           />
           <input
             type="text"
@@ -64,7 +76,7 @@ function App() {
           />
         </form>
         <ul class="todo__list">
-          <For each={todos()}>{(todo, index) =>
+          <For each={todos()}>{(todo) =>
             <li class="todo__item">
               <div class="checkbox-wrapper">
                 <input
@@ -75,7 +87,7 @@ function App() {
                   {todo.title}
                 </label>
               </div>
-              <button aria-label={`Delete item ${todo.title}`}>
+              <button aria-label={`Delete item ${todo.title}`} onClick={() => removeTodo(todo.index)} >
                 <img src={iconCross} alt="" />
               </button>
             </li>
