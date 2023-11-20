@@ -15,7 +15,7 @@ html {
     --checkmark-border: hsl(236, 33%, 92%);
     --task-checked: hsl(233, 11%, 84%);
     --footer-text: hsl(237, 9%, 62%, 80%);
-    --light-theme-very-dark-grayish-blue-darker: hsl(235, 20%, 35%);
+    --footer-text-hover: hsl(235, 20%, 35%);
 
     /* Typography */
     --font-size-100: 12px;
@@ -68,8 +68,9 @@ html {
     --surface-color: hsl(237, 14%, 26%);
     --line-color: hsl(233, 14%, 35%);
     /*(hover)*/
-    --dark-grayish-blue: hsl(234, 11%, 52%);
+    /* --dark-grayish-blue: hsl(234, 11%, 52%); */
     --task-checked: hsl(233, 14%, 55%);
-    /* --dark-theme-very-dark-grayish-blue-darker: hsl(237, 14%, 26%); */
+    --footer-text-hover: hsl(237, 9%, 90%);
+    --dark-theme-very-dark-grayish-blue-darker: hsl(237, 14%, 26%);
 
 }

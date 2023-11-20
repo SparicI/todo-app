@@ -80,6 +80,12 @@ input[type="checkbox"] {
   border: 1px solid var(--checkmark-border);
 }
 
+input[type="checkbox"]:hover {
+  background: linear-gradient(var(--surface-color), var(--surface-color)) padding-box,
+    var(--checked-background) border-box;
+  border-radius: var(--border-radius-round);
+  border: 1px solid transparent;
+}
 
 input[type="checkbox"]::before {
   content: url(/src/assets/images/icon-check.svg);
@@ -161,6 +167,9 @@ input[type="text"]:focus {
   font-weight: var(--font-weight-bold);
 }
 
+.footer button:hover {
+  color: var(--footer-text-hover);
+}
 
 @media screen and (min-width: 375px) {
   .hero-image {
