@@ -116,7 +116,7 @@ function App() {
                     {todo.title}
                   </label>
                 </div>
-                <button aria-label={`Delete item ${todo.title}`} onClick={() => removeTodo(todo.index)} >
+                <button aria-label={`Delete item ${todo.title}`} onClick={() => removeTodo(todo.index)} class="todo__delete" >
                   <img src={iconCross} alt="" />
                 </button>
               </li>

@@ -88,7 +88,7 @@ input[type="checkbox"]::before {
   display: grid;
   place-content: center;
   transform: scale(0);
-  transition: 120ms transform ease-in-out;
+  transition: 0.3s transform ease-in-out;
   background: var(--checked-background);
 }
 
@@ -174,10 +174,18 @@ input[type="text"]:focus {
 
 @media screen and (min-width: 768px) {
 
+  .todo__delete {
+    opacity: 0;
+    transition: 0.2s opacity ease-in-out;
+  }
+
+  .todo__item:hover .todo__delete {
+    opacity: 1;
+  }
+
   .footer>* {
     padding-inline: 0;
   }
-
 
   .footer__uncompleted {
     grid-column: 1 / 2;
