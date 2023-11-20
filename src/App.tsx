@@ -89,7 +89,7 @@ function App() {
             </button>
           </Show>
         </header>
-        <form onSubmit={addTodo} class="todo__form checkbox-wrapper" >
+        <form onSubmit={addTodo} class="form checkbox-wrapper" >
           <input
             type="checkbox"
             disabled
@@ -124,17 +124,17 @@ function App() {
             </For>
           </ul>
           <footer class="footer">
-            <p>{numberOfUncompletedTasks()} item left</p>
+            <p class="footer__uncompleted">{numberOfUncompletedTasks()} item left</p>
             <div class="footer__controls">
               <button>All</button>
               <button>Active</button>
               <button>Completed</button>
             </div>
-            <div>
-              <button>
-                Clear Completed
-              </button>
-            </div>
+
+            <button class="footer__clear">
+              Clear Completed
+            </button>
+
           </footer>
         </div>
       </div>
