@@ -12,12 +12,30 @@ function App() {
 
   type TodoItem = { title: string; index: number; done: boolean };
 
+  // signals
   const [lightTheme, setLightTheme] = createSignal(true);
   const [newTitle, setNewTitle] = createSignal('')
   const [todos, setTodos] = createSignal<TodoItem[]>([])
 
+  // derived signals
+  const numberOfUncompletedTasks = () => {
+    const uncompletedTasks = todos().filter(item => item.done === false)
+    return uncompletedTasks.length
+  }
+
+  // Toggle theme
   const changeToDarkTheme = () => setLightTheme(false)
   const changeToLightTheme = () => setLightTheme(true)
+
+  createEffect(() => {
+    if (lightTheme() === false) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  });
+
+  //Add todo
   const addTodo = (e: Event) => {
     e.preventDefault()
     // batch helper allows to queue up multiple changes and then apply them all
@@ -28,6 +46,7 @@ function App() {
     })
   }
 
+  //Remove todo
   const removeTodo = (index: number) => {
     const filteredTodos = todos().filter(item => item.index !== index)
     setTodos(filteredTodos)
@@ -35,13 +54,7 @@ function App() {
 
   // TODO: add theme preferences and tasks to local storage
 
-  createEffect(() => {
-    if (lightTheme() === false) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  });
+
 
 
 
@@ -75,27 +88,42 @@ function App() {
             onInput={(e) => setNewTitle(e.currentTarget.value)}
           />
         </form>
-        <ul class="todo__list">
-          <For each={todos()}>{(todo) =>
-            <li class="todo__item">
-              <div class="checkbox-wrapper">
-                <input
-                  type="checkbox"
-                  id={todo.title}
-                />
-                <label for={todo.title}>
-                  {todo.title}
-                </label>
-              </div>
-              <button aria-label={`Delete item ${todo.title}`} onClick={() => removeTodo(todo.index)} >
-                <img src={iconCross} alt="" />
+        <div class="todo">
+          <ul class="todo__list">
+            <For each={todos()}>{(todo) =>
+              <li class="todo__item">
+                <div class="checkbox-wrapper">
+                  <input
+                    type="checkbox"
+                    id={todo.title}
+                  />
+                  <label for={todo.title}>
+                    {todo.title}
+                  </label>
+                </div>
+                <button aria-label={`Delete item ${todo.title}`} onClick={() => removeTodo(todo.index)} >
+                  <img src={iconCross} alt="" />
+                </button>
+              </li>
+            }
+            </For>
+          </ul>
+          <footer class="footer">
+            <p>{numberOfUncompletedTasks()} item left</p>
+            <div class="footer__controls">
+              <button>All</button>
+              <button>Active</button>
+              <button>Completed</button>
+            </div>
+            <div>
+              <button>
+                Clear Completed
               </button>
-            </li>
-          }
+            </div>
+          </footer>
 
+        </div>
 
-          </For>
-        </ul>
 
       </div>
       {/* <div>

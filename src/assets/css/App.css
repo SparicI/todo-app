@@ -1,11 +1,10 @@
 .container {
-  inline-size: min(540px, 100%);
+  inline-size: min(580px, 100%);
   padding: var(--spacing-400);
   position: fixed;
   top: 50px;
   left: 50%;
   translate: -50%;
-
 }
 
 .header {
@@ -32,9 +31,18 @@
 }
 
 .todo__form,
-.todo__list {
+.todo {
   background-color: var(--surface-color);
   border-radius: var(--border-radius-soft);
+}
+
+.todo {
+  overflow: hidden;
+}
+
+.todo__list {
+  height: 50dvh;
+  overflow-y: scroll;
 }
 
 .todo__form {
@@ -90,11 +98,33 @@ input[type="text"] {
   background-color: inherit;
   border: none;
   flex-grow: 1;
-  color: var(--font-color);
+  color: var(--text-color);
 }
 
 input[type="text"]:focus {
   outline: none;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--surface-color);
+  padding: var(--spacing-400);
+  border-top: 1px solid var(--line-color);
+
+  font-size: var(--font-size-200);
+  color: var(--light-theme-dark-grayish-blue-lighter);
+}
+
+.footer button {
+  color: inherit;
+}
+
+.footer__controls {
+  display: flex;
+  gap: var(--spacing-400);
+  margin-inline-start: var(--spacing-500);
+  font-weight: var(--font-weight-bold);
 }
 
 @media screen and (min-width: 375px) {
@@ -110,8 +140,5 @@ input[type="text"]:focus {
     background-image: url(/src/assets/images/bg-desktop-dark.jpg);
   }
 
-  .container {
-    top: 100px;
-  }
 
 }
