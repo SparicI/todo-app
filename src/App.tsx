@@ -104,7 +104,7 @@ function App() {
         </form>
         <div class="todo">
           <ul class="todo__list">
-            <For each={todos()}>{(todo, i) =>
+            <For each={todos()}>{(todo) =>
               <li class="todo__item">
                 <div class="checkbox-wrapper">
                   <input
