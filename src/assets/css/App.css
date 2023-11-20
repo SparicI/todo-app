@@ -38,6 +38,7 @@
 
 .todo {
   overflow: hidden;
+  box-shadow: var(--box-shadow-base);
 }
 
 .todo__list {
@@ -94,6 +95,11 @@ input[type="checkbox"]:checked::before {
   transform: scale(1);
 }
 
+input[type="checkbox"]:checked+label {
+  color: var(--task-checked);
+  text-decoration: line-through;
+}
+
 input[type="text"] {
   background-color: inherit;
   border: none;
@@ -113,7 +119,7 @@ input[type="text"]:focus {
   border-top: 1px solid var(--line-color);
 
   font-size: var(--font-size-200);
-  color: var(--light-theme-dark-grayish-blue-lighter);
+  color: var(--footer-text);
 }
 
 .footer button {
