@@ -65,7 +65,13 @@ function App() {
       })
       setTodos(checkedTodos)
     }
+  }
 
+  // Clear completed
+
+  const clearCompleted = () => {
+    const filterCompleted = todos().filter(item => item.done === false)
+    setTodos(filterCompleted)
   }
 
   // TODO: add theme preferences and tasks to local storage
@@ -131,7 +137,7 @@ function App() {
               <button>Completed</button>
             </div>
 
-            <button class="footer__clear">
+            <button class="footer__clear" onClick={clearCompleted}>
               Clear Completed
             </button>
 

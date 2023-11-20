@@ -63,6 +63,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-400);
+  flex-grow: 1;
 }
 
 input[type="checkbox"],
@@ -94,6 +95,10 @@ input[type="checkbox"]::before {
 
 input[type="checkbox"]:checked::before {
   transform: scale(1);
+}
+
+input[type="checkbox"]+label {
+  flex-grow: 1;
 }
 
 input[type="checkbox"]:checked+label {
