@@ -1,8 +1,14 @@
 import { createSignal, createEffect, Show, For, batch } from 'solid-js'
 import { createStore } from "solid-js/store";
+
+// components
+import TodoItem from './components/TodoItem';
+
+// images
 import iconSun from './assets/images/icon-sun.svg'
 import iconMoon from './assets/images/icon-moon.svg'
-import iconCross from './assets/images/icon-cross.svg'
+
+// css
 import './assets/css/App.css'
 import './assets/css/variables.css'
 import './assets/css/fonts.css'
@@ -22,6 +28,7 @@ function App() {
     todos: [],
     showTasks: "all",
   })
+
   const [lightTheme, setLightTheme] = createSignal(true);
   const [newTitle, setNewTitle] = createSignal('')
 
@@ -72,7 +79,7 @@ function App() {
   }
 
   //Toggle todo checked
-  const toggleDoneState = (index: number) => {
+  const toggleTodo = (index: number) => {
     setState("todos",
       state.todos.map((todo) => {
         return todo.index !== index ? todo : { ...todo, done: !todo.done };
@@ -121,22 +128,7 @@ function App() {
         <div class="todo">
           <ul class="todo__list">
             <For each={filterList(state.todos)}>{(todo) =>
-              <li class="todo__item">
-                <div class="checkbox-wrapper">
-                  <input
-                    type="checkbox"
-                    id={todo.title}
-                    checked={todo.done}
-                    onChange={[toggleDoneState, todo.index]}
-                  />
-                  <label for={todo.title}>
-                    {todo.title}
-                  </label>
-                </div>
-                <button aria-label={`Delete item ${todo.title}`} onClick={() => removeTodo(todo.index)} class="todo__delete" >
-                  <img src={iconCross} alt="" />
-                </button>
-              </li>
+              <TodoItem todo={todo} onRemove={removeTodo} onToggle={toggleTodo} />
             }
             </For>
           </ul>
