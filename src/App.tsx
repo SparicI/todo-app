@@ -23,6 +23,19 @@ type TodoStore = {
 }
 
 
+const initializeTheme = () => {
+  let lightTheme;
+  if (typeof localStorage !== "undefined" && localStorage.getItem("lightTheme")) {
+    lightTheme = localStorage.getItem("theme") as "true" | "false";
+  } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    lightTheme = "false";
+  } else {
+    lightTheme = "true";
+  }
+  return Boolean(lightTheme);
+};
+
+
 function App() {
 
   const [state, setState] = createStore<TodoStore>({
@@ -30,7 +43,7 @@ function App() {
     showTasks: "all",
   })
 
-  const [lightTheme, setLightTheme] = createSignal(true);
+  const [lightTheme, setLightTheme] = createSignal(initializeTheme());
   const [newTitle, setNewTitle] = createSignal('')
 
 
@@ -51,17 +64,22 @@ function App() {
     return uncompletedTasks.length
   }
 
-  // Toggle theme
+  // THEME toggle
+
   const changeToDarkTheme = () => setLightTheme(false)
   const changeToLightTheme = () => setLightTheme(true)
 
   createEffect(() => {
     if (lightTheme() === false) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem("lightTheme", 'false');
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem("lightTheme", 'true');
     }
   });
+
+
 
   //Add todo
   const addTodo = (e: Event) => {
@@ -93,7 +111,7 @@ function App() {
     setState("todos", state.todos.filter(item => item.done === false))
   }
 
-  // TODO: add theme preferences and tasks to local storage
+  // TODO: add tasks to local storage
 
   return (
     <>
