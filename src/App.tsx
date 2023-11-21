@@ -3,6 +3,7 @@ import { createStore } from "solid-js/store";
 
 // components
 import TodoItem from './components/TodoItem';
+import TodoFilterButton from './components/TodoFilterButton'
 
 // images
 import iconSun from './assets/images/icon-sun.svg'
@@ -135,15 +136,9 @@ function App() {
           <footer class="footer">
             <p class="footer__uncompleted">{numberOfUncompletedTasks()} item left</p>
             <div class="footer__controls">
-              <div class="footer__control">
-                <input type="radio" name="tasks" id="all" checked onChange={() => showTasks('all')} /><label for="all">All</label>
-              </div>
-              <div class="footer__control">
-                <input type="radio" name="tasks" id="active" onChange={() => showTasks('active')} /><label for="active">Active</label>
-              </div>
-              <div class="footer__control">
-                <input type="radio" name="tasks" id="completed" onChange={() => showTasks('completed')} /><label for="completed">Completed</label>
-              </div>
+              <TodoFilterButton title="All" type="all" onShow={showTasks} checked={true} />
+              <TodoFilterButton title="Active" type="active" onShow={showTasks} />
+              <TodoFilterButton title="Completed" type="completed" onShow={showTasks} />
             </div>
 
             <button class="footer__clear" onClick={clearCompleted}>

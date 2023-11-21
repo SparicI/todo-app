@@ -8,6 +8,7 @@ import '../assets/css/utilities.css'
 
 
 type TodoItem = { title: string; index: number; done: boolean };
+
 interface TodoItemProps {
     todo: TodoItem;
     onRemove: (id: number) => void;
