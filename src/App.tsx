@@ -1,4 +1,5 @@
 import { createSignal, createEffect, Show, For, batch } from 'solid-js'
+import { createStore } from "solid-js/store";
 import iconSun from './assets/images/icon-sun.svg'
 import iconMoon from './assets/images/icon-moon.svg'
 import iconCross from './assets/images/icon-cross.svg'
@@ -8,18 +9,37 @@ import './assets/css/fonts.css'
 import './assets/css/reset.css'
 import './assets/css/utilities.css'
 
+type TodoItem = { title: string; index: number; done: boolean };
+type TodoStore = {
+  todos: TodoItem[],
+  showTasks: string
+}
+
+
 function App() {
 
-  type TodoItem = { title: string; index: number; done: boolean };
-
-  // signals
+  const [state, setState] = createStore<TodoStore>({
+    todos: [],
+    showTasks: "all",
+  })
   const [lightTheme, setLightTheme] = createSignal(true);
   const [newTitle, setNewTitle] = createSignal('')
-  const [todos, setTodos] = createSignal<TodoItem[]>([])
 
-  // derived signals
+
+  let showTasks = (type: string) => {
+    setState("showTasks", type)
+  }
+
+  // Filter todo list - all, active, completed
+  const filterList = (todos: TodoItem[]) => {
+    if (state.showTasks === "active") return todos.filter((todo) => !todo.done);
+    else if (state.showTasks === "completed") return todos.filter((todo) => todo.done);
+    else return todos;
+  }
+
+  // Number of uncompleted tasks
   const numberOfUncompletedTasks = () => {
-    const uncompletedTasks = todos().filter(item => item.done === false)
+    const uncompletedTasks = state.todos.filter(item => item.done === false)
     return uncompletedTasks.length
   }
 
@@ -41,41 +61,31 @@ function App() {
     // batch helper allows to queue up multiple changes and then apply them all
     // at the same time before notifying their observers.
     batch(() => {
-      setTodos([...todos(), { title: newTitle(), index: Math.floor(Date.now() + Math.random() * 100), done: false }])
+      setState("todos", [...state.todos, { title: newTitle(), index: Math.floor(Date.now() + Math.random() * 100), done: false }])
       setNewTitle('')
     })
   }
 
   //Remove todo
   const removeTodo = (index: number) => {
-    const filteredTodos = todos().filter(item => item.index !== index)
-    setTodos(filteredTodos)
+    setState("todos", state.todos.filter(item => item.index !== index))
   }
 
-  //Check todo
-
-  const checkTodo = (event: Event, index: number) => {
-    const target = event.currentTarget as HTMLInputElement;
-    if (target) {
-      const checkedTodos = todos().map(item => {
-        if (item.index === index) {
-          item.done = target.checked
-        }
-        return item
+  //Toggle todo checked
+  const toggleDoneState = (index: number) => {
+    setState("todos",
+      state.todos.map((todo) => {
+        return todo.index !== index ? todo : { ...todo, done: !todo.done };
       })
-      setTodos(checkedTodos)
-    }
+    )
   }
 
   // Clear completed
-
   const clearCompleted = () => {
-    const filterCompleted = todos().filter(item => item.done === false)
-    setTodos(filterCompleted)
+    setState("todos", state.todos.filter(item => item.done === false))
   }
 
   // TODO: add theme preferences and tasks to local storage
-
 
   return (
     <>
@@ -110,13 +120,14 @@ function App() {
         </form>
         <div class="todo">
           <ul class="todo__list">
-            <For each={todos()}>{(todo) =>
+            <For each={filterList(state.todos)}>{(todo) =>
               <li class="todo__item">
                 <div class="checkbox-wrapper">
                   <input
                     type="checkbox"
                     id={todo.title}
-                    onChange={(e) => checkTodo(e, todo.index)}
+                    checked={todo.done}
+                    onChange={[toggleDoneState, todo.index]}
                   />
                   <label for={todo.title}>
                     {todo.title}
@@ -132,9 +143,15 @@ function App() {
           <footer class="footer">
             <p class="footer__uncompleted">{numberOfUncompletedTasks()} item left</p>
             <div class="footer__controls">
-              <button>All</button>
-              <button>Active</button>
-              <button>Completed</button>
+              <div class="footer__control">
+                <input type="radio" name="tasks" id="all" checked onChange={() => showTasks('all')} /><label for="all">All</label>
+              </div>
+              <div class="footer__control">
+                <input type="radio" name="tasks" id="active" onChange={() => showTasks('active')} /><label for="active">Active</label>
+              </div>
+              <div class="footer__control">
+                <input type="radio" name="tasks" id="completed" onChange={() => showTasks('completed')} /><label for="completed">Completed</label>
+              </div>
             </div>
 
             <button class="footer__clear" onClick={clearCompleted}>
@@ -148,5 +165,6 @@ function App() {
     </>
   )
 }
+
 
 export default App

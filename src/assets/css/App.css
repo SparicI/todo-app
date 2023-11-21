@@ -167,7 +167,16 @@ input[type="text"]:focus {
   font-weight: var(--font-weight-bold);
 }
 
-.footer button:hover {
+.footer__controls input[type="radio"] {
+  visibility: hidden;
+}
+
+.footer__controls input[type="radio"]:checked+label {
+  color: var(--bright-blue);
+}
+
+.footer__control:hover,
+.footer__clear:hover {
   color: var(--footer-text-hover);
 }
 
