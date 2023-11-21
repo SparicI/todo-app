@@ -26,7 +26,7 @@ type TodoStore = {
 const initializeTheme = () => {
   let lightTheme;
   if (typeof localStorage !== "undefined" && localStorage.getItem("lightTheme")) {
-    lightTheme = localStorage.getItem("theme") as "true" | "false";
+    lightTheme = localStorage.getItem("theme");
   } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
     lightTheme = "false";
   } else {
@@ -35,17 +35,26 @@ const initializeTheme = () => {
   return Boolean(lightTheme);
 };
 
+const initializeState = (): TodoItem[] => {
+  let todos;
+  if (typeof localStorage !== "undefined" && localStorage.getItem("todos")) {
+    todos = JSON.parse(localStorage.getItem("todos") || '[]');
+  } else {
+    todos = [];
+  }
+  return todos
+};
+
 
 function App() {
 
   const [state, setState] = createStore<TodoStore>({
-    todos: [],
+    todos: initializeState(),
     showTasks: "all",
   })
 
   const [lightTheme, setLightTheme] = createSignal(initializeTheme());
   const [newTitle, setNewTitle] = createSignal('')
-
 
   let showTasks = (type: string) => {
     setState("showTasks", type)
@@ -79,8 +88,6 @@ function App() {
     }
   });
 
-
-
   //Add todo
   const addTodo = (e: Event) => {
     e.preventDefault()
@@ -90,11 +97,13 @@ function App() {
       setState("todos", [...state.todos, { title: newTitle(), index: Math.floor(Date.now() + Math.random() * 100), done: false }])
       setNewTitle('')
     })
+    localStorage.setItem("todos", JSON.stringify(state.todos))
   }
 
   //Remove todo
   const removeTodo = (index: number) => {
     setState("todos", state.todos.filter(item => item.index !== index))
+    localStorage.setItem("todos", JSON.stringify(state.todos))
   }
 
   //Toggle todo checked
@@ -104,11 +113,13 @@ function App() {
         return todo.index !== index ? todo : { ...todo, done: !todo.done };
       })
     )
+    localStorage.setItem("todos", JSON.stringify(state.todos))
   }
 
   // Clear completed
   const clearCompleted = () => {
     setState("todos", state.todos.filter(item => item.done === false))
+    localStorage.setItem("todos", JSON.stringify(state.todos))
   }
 
   // TODO: add tasks to local storage
