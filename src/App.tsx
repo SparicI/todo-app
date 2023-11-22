@@ -196,11 +196,18 @@ function App() {
           />
         </form>
         <div class="todo">
-          <ul class="todo__list">
+          <ul class="todo__list"><Show
+            when={filterList(state.todos).length > 0}
+            fallback={<p class="todo__notasks">There are no tasks in {(state.showTasks).toUpperCase()} list.</p>}
+          >
             <For each={filterList(state.todos)}>{(todo) =>
               <TodoItem todo={todo} onRemove={removeTodo} onToggle={toggleTodo} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} handleDragOver={handleDragOver} handleDrop={handleDrop} />
             }
             </For>
+
+          </Show>
+
+
           </ul>
           <footer class="footer">
             <p class="footer__uncompleted">{numberOfUncompletedTasks()} item left</p>
