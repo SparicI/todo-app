@@ -19,7 +19,8 @@ import './assets/css/utilities.css'
 type TodoItem = { title: string; index: number; done: boolean };
 type TodoStore = {
   todos: TodoItem[],
-  showTasks: string
+  showTasks: string,
+  draggingItem: TodoItem | null
 }
 
 
@@ -51,6 +52,7 @@ function App() {
   const [state, setState] = createStore<TodoStore>({
     todos: initializeState(),
     showTasks: "all",
+    draggingItem: null,
   })
 
   const [lightTheme, setLightTheme] = createSignal(initializeTheme());
@@ -122,7 +124,45 @@ function App() {
     localStorage.setItem("todos", JSON.stringify(state.todos))
   }
 
-  // TODO: add tasks to local storage
+  // Drag and drop
+
+  // The dragstart event is fired when the user starts dragging an element or text selection.
+  const handleDragStart = (e: DragEvent, item: TodoItem) => {
+    setState("draggingItem", item);
+    // console.log(state.draggingItem)
+    e?.dataTransfer?.setData('text/plain', '');
+  };
+
+  // The dragend event is fired when a drag operation is being ended
+  // (by releasing a mouse button or hitting the escape key).
+  const handleDragEnd = () => {
+    setState("draggingItem", null);
+    // console.log(state.draggingItem)
+  };
+
+  // The dragover event is fired when an element or text selection is
+  // being dragged over a valid drop target (every few hundred milliseconds).
+  const handleDragOver = (e: DragEvent) => {
+    // prevent default to allow drop
+    e.preventDefault();
+  };
+
+  // The drop event is fired when an element or text selection is dropped on a valid drop target
+  const handleDrop = (e: DragEvent, targetItem: TodoItem) => {
+    console.log(e)
+    const draggingItem = state.draggingItem
+    const items = [...state.todos]
+    if (!draggingItem) return;
+
+    const currentIndex = items.indexOf(draggingItem);
+    const targetIndex = items.indexOf(targetItem);
+
+    if (currentIndex !== -1 && targetIndex !== -1) {
+      items.splice(currentIndex, 1);
+      items.splice(targetIndex, 0, draggingItem);
+      setState("todos", items)
+    }
+  };
 
   return (
     <>
@@ -158,7 +198,7 @@ function App() {
         <div class="todo">
           <ul class="todo__list">
             <For each={filterList(state.todos)}>{(todo) =>
-              <TodoItem todo={todo} onRemove={removeTodo} onToggle={toggleTodo} />
+              <TodoItem todo={todo} onRemove={removeTodo} onToggle={toggleTodo} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} handleDragOver={handleDragOver} handleDrop={handleDrop} />
             }
             </For>
           </ul>
@@ -175,6 +215,7 @@ function App() {
             </button>
 
           </footer>
+          <p class="todo__dnd">Drag and drop to reorder list</p>
         </div>
       </div>
 

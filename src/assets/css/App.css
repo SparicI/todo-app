@@ -180,6 +180,13 @@ input[type="text"]:focus {
   color: var(--footer-text-hover);
 }
 
+.todo__dnd {
+  font-size: var(--font-size-200);
+  color: var(--footer-text);
+  text-align: center;
+  margin-block: 2rem;
+}
+
 @media screen and (min-width: 375px) {
   .hero-image {
     height: 300px;
